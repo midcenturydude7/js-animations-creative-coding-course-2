@@ -15,7 +15,7 @@ const settings = {
 // Seed: 760419
 
 const sketch = ({ width, height }) => {
-  random.setSeed("mat");
+  random.setSeed("matt");
   console.log(seed);
 
   let x, y, w, h, fill, stroke, blend;
