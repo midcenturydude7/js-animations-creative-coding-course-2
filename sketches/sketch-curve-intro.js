@@ -4,12 +4,18 @@ const settings = {
   dimensions: [1080, 1080],
 };
 
-const sketch = () => {
+let elCanvas;
+
+const sketch = ({ canvas }) => {
   const points = [
     new Point({ x: 200, y: 540 }),
     new Point({ x: 400, y: 300, control: true }),
     new Point({ x: 880, y: 540 }),
   ];
+
+  canvas.addEventListener("mousedown", onMouseDown);
+
+  elCanvas = canvas;
 
   return ({ context, width, height }) => {
     context.fillStyle = "white";
@@ -29,6 +35,20 @@ const sketch = () => {
       point.draw(context);
     });
   };
+};
+
+const onMouseDown = (e) => {
+  window.addEventListener("mousemove", onMouseMove);
+  window.addEventListener("mouseup", onMouseUp);
+};
+
+const onMouseMove = (e) => {
+  console.log(e.offsetX, e.offsetY);
+};
+
+const onMouseUp = () => {
+  window.removeEventListener("mousemove", onMouseMove);
+  window.removeEventListener("mouseup", onMouseUp);
 };
 
 canvasSketch(sketch, settings);
