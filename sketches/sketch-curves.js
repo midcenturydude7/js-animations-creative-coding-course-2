@@ -31,7 +31,7 @@ const sketch = ({ width, height }) => {
   let amplitude = 90;
 
   const colors = colormap({
-    colormap: "salinity",
+    colormap: "jet",
     nshades: amplitude,
   });
 
