@@ -15,25 +15,31 @@ let minDb, maxDb;
 
 const sketch = () => {
   const numCircles = 5;
-  const numSlices = 9;
+  const numSlices = 1;
   const slice = (Math.PI * 2) / numSlices;
   const radius = 200;
 
   const bins = [];
   const lineWidths = [];
+  const rotationOffsets = [];
 
-  let lineWidth, bin, mapped;
+  let lineWidth, bin, mapped, phi;
 
   for (let i = 0; i < numCircles * numSlices; i++) {
     bin = random.rangeFloor(4, 64);
-    if (random.value() > 0.5) bin = 0;
     bins.push(bin);
   }
 
   for (let i = 0; i < numCircles; i++) {
     const t = i / (numCircles - 1);
-    lineWidth = eases.quadIn(t) * 200 + 20;
+    lineWidth = eases.quadIn(t) * 200 + 10;
     lineWidths.push(lineWidth);
+  }
+
+  for (let i = 0; i < numCircles; i++) {
+    rotationOffsets.push(
+      random.range(Math.PI * -0.25, Math.PI * 0.25) - Math.PI * 0.5
+    );
   }
 
   return ({ context, width, height }) => {
@@ -46,32 +52,32 @@ const sketch = () => {
 
     context.save();
     context.translate(width * 0.5, height * 0.5);
+    context.scale(1, -1);
 
     let cradius = radius;
 
     for (let i = 0; i < numCircles; i++) {
       context.save();
+      context.rotate(rotationOffsets[i]);
+
+      cradius += lineWidths[i] * 0.5 + 2;
 
       for (let j = 0; j < numSlices; j++) {
         context.rotate(slice);
         context.lineWidth = lineWidths[i];
 
         bin = bins[i * numSlices + j];
-        if (!bin) continue;
 
         mapped = math.mapRange(audioData[bin], minDb, maxDb, 0, 1, true);
 
-        lineWidth = lineWidths[i] * mapped;
-        if (lineWidth < 1) continue;
-
-        context.lineWidth = lineWidth;
+        phi = slice * mapped;
 
         context.beginPath();
-        context.arc(0, 0, cradius + context.lineWidth * 0.5, 0, slice);
+        context.arc(0, 0, cradius, 0, phi);
         context.stroke(); // Draw the circle}
       }
 
-      cradius += lineWidths[i];
+      cradius += lineWidths[i] * 0.5;
 
       context.restore();
     }
