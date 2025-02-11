@@ -18,6 +18,8 @@ const cursor = { x: 9999, y: 9999 };
 //   nshades: 20,
 // });
 
+const fillColor = "black";
+
 let elCanvas;
 let imgA, imgB;
 
@@ -96,7 +98,7 @@ const sketch = ({ canvas, width, height }) => {
   }
 
   return ({ context, width, height }) => {
-    context.fillStyle = "white";
+    context.fillStyle = fillColor;
     context.fillRect(0, 0, width, height);
 
     context.drawImage(imgACanvas, 0, 0);
@@ -143,9 +145,16 @@ const loadImage = async (url) => {
   });
 };
 
-const start = async () => {
-  imgA = await loadImage("sketches/images/henry-face-v1.jpg");
-  imgB = await loadImage("sketches/images/henry-color-swatch.jpg");
+const start = async (imgAUrl, imgBUrl) => {
+  if (fillColor === "white") {
+    imgAUrl = "sketches/images/henry-face-v1.jpg";
+    imgBUrl = "sketches/images/henry-color-swatch.jpg";
+  } else if (fillColor === "black") {
+    imgAUrl = "sketches/images/henry-BnW-64.jpg";
+    imgBUrl = "sketches/images/henry-color-swatch.jpg";
+  }
+  imgA = await loadImage(imgAUrl);
+  imgB = await loadImage(imgBUrl);
 
   canvasSketch(sketch, settings);
 };
