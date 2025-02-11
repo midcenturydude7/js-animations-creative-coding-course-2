@@ -96,7 +96,7 @@ const sketch = ({ canvas, width, height }) => {
   }
 
   return ({ context, width, height }) => {
-    context.fillStyle = "black";
+    context.fillStyle = "white";
     context.fillRect(0, 0, width, height);
 
     context.drawImage(imgACanvas, 0, 0);
@@ -144,8 +144,8 @@ const loadImage = async (url) => {
 };
 
 const start = async () => {
-  imgA = await loadImage("sketches/images/woman-face.jpg");
-  imgB = await loadImage("sketches/images/balloon.avif");
+  imgA = await loadImage("sketches/images/henry-face-v1.jpg");
+  imgB = await loadImage("sketches/images/henry-color-swatch.jpg");
 
   canvasSketch(sketch, settings);
 };
