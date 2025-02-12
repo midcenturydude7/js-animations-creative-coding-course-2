@@ -146,7 +146,7 @@ const loadImage = async (url) => {
 };
 
 const start = async (imgAUrl, imgBUrl) => {
-  if (fillColor === "white") {
+  if (fillColor === "white" || fillColor === "#F18FC1") {
     imgAUrl = "sketches/images/henry-face-v1.jpg";
     imgBUrl = "sketches/images/henry-color-swatch.jpg";
   } else if (fillColor === "black") {
