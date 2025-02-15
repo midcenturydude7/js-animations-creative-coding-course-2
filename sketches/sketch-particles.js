@@ -18,7 +18,7 @@ const cursor = { x: 9999, y: 9999 };
 //   nshades: 20,
 // });
 
-const fillColor = "white";
+const fillColor = "black";
 
 let elCanvas;
 let imgA, imgB;
