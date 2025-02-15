@@ -113,7 +113,7 @@ const sketch = ({ canvas, width, height }) => {
   };
 };
 
-// Mouseover (hover) behavior
+// Mouseover (hover) behaviors
 const onMouseEnter = () => {
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("mouseenter", onMouseEnter);
