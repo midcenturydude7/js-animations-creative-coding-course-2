@@ -18,7 +18,7 @@ const cursor = { x: 9999, y: 9999 };
 //   nshades: 20,
 // });
 
-const fillColor = "black";
+const fillColor = "white";
 
 let elCanvas;
 let imgA, imgB;
@@ -53,7 +53,8 @@ const sketch = ({ canvas, width, height }) => {
   const fitRadius = dotRadius;
 
   elCanvas = canvas;
-  canvas.addEventListener("mousedown", onMouseDown);
+  if (fillColor === "white") canvas.addEventListener("mousedown", onMouseDown);
+  else canvas.addEventListener("mouseenter", onMouseEnter);
 
   for (let i = 0; i < numCircles; i++) {
     const circumference = Math.PI * 2 * circRadius;
@@ -112,13 +113,24 @@ const sketch = ({ canvas, width, height }) => {
   };
 };
 
-const onMouseDown = (e) => {
+// Mouseover (hover) behavior
+const onMouseEnter = () => {
   window.addEventListener("mousemove", onMouseMove);
-  window.addEventListener("mouseup", onMouseUp);
+  window.addEventListener("mouseenter", onMouseEnter);
 
   onMouseMove(e);
 };
 
+// Clean-up for mouseover behavior
+const onMouseLeave = () => {
+  window.removeEventListener("mousemove", onMouseMove);
+  window.removeEventListener("mouseleave", onMouseLeave);
+
+  cursor.x = 9999;
+  cursor.y = 9999;
+};
+
+// Mousemove for both hover and on click behaviors
 const onMouseMove = (e) => {
   const x = Math.floor((e.offsetX / elCanvas.offsetWidth) * elCanvas.width);
   const y = Math.floor((e.offsetY / elCanvas.offsetHeight) * elCanvas.height);
@@ -127,6 +139,15 @@ const onMouseMove = (e) => {
   cursor.y = y;
 };
 
+// Mousedown (on click) behavior
+const onMouseDown = () => {
+  window.addEventListener("mousemove", onMouseMove);
+  window.addEventListener("mouseup", onMouseUp);
+
+  onMouseMove(e);
+};
+
+// Clean-up for mousedown behavior
 const onMouseUp = () => {
   window.removeEventListener("mousemove", onMouseMove);
   window.removeEventListener("mouseup", onMouseUp);
