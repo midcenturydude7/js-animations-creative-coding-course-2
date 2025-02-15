@@ -128,6 +128,12 @@ const onMouseLeave = () => {
 
   cursor.x = 9999;
   cursor.y = 9999;
+
+  /*
+  particles.forEach((particle) => {
+    particle.scale = 1; // reset scale to 1});
+  });
+  */
 };
 
 // Mousemove for both hover and on click behaviors
