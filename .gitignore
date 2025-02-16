@@ -27,3 +27,5 @@ build/
 #Terminal apps
 tmux-client-*.log
 
+# Config files
+jsconfig.json
